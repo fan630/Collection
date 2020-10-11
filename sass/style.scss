@@ -555,11 +555,7 @@ body {
 		img {
 			position: relative;
 			max-width: 100%;
-			-webkit-transform: scale(1.2);
-			-moz-transform: scale(1.2);
-			-ms-transform: scale(1.2);
-			-o-transform: scale(1.2);
-			transform: scale(1.2);
+			transform: scale(0.9);
 			@include transition(.9s);
 		}
 	}
@@ -599,11 +595,11 @@ body {
 	&:hover{
 		.blog-img{
 			img{
-				-webkit-transform: scale(1.0);
-				-moz-transform: scale(1.0);
-				-ms-transform: scale(1.0);
-				-o-transform: scale(1.0);
-				transform: scale(1.0);
+				-webkit-transform: scale(0.9);
+				-moz-transform: scale(0.9);
+				-ms-transform: scale(0.9);
+				-o-transform: scale(0.9);
+				transform: scale(0.9);
 			}
 		}
 	}
