@@ -93,8 +93,8 @@
 			<div class="fh5co-narrow-content">
 				<h2 class="fh5co-heading animate-box" data-animate-effect="fadeInLeft">Portfolio</h2>
 				<div class="row row-bottom-padded-md">
-					<div class="col-md-3 col-sm-6 col-padding text-center animate-box">
-						<a href="#" class="work image-popup" style="background-image: url(images/img-1.jpg);">
+					<!-- <div class="col-md-3 col-sm-6 col-padding text-center animate-box">
+						<a href="#" class="work image-popup" style="background-image: url(images/beer.jpg);">
 							<div class="desc">
 								<h3>Project Name</h3>
 								<span>Illustration</span>
@@ -186,9 +186,10 @@
 							<div class="desc">
 								<h3>Project Name</h3>
 								<span>Illustration</span>
+								
 							</div>
 						</a>
-					</div>
+					</div> -->
 				</div>
 			</div>
 		</div>
@@ -208,6 +209,43 @@
 	
 	<!-- MAIN JS -->
 	<script src="js/main.js"></script>
+
+	<script>
+		fetch("https://resumelist.azurewebsites.net/crud")
+			.then(res => res.json())
+			.then(resp => {
+				//console.log(resp[0].title)
+				console.log(resp)
+				let str = ""
+				for(let i = 0; i < resp.length; i++ ){
+					str += `<div class="col-md-3 col-sm-6 col-padding text-center">
+							<a href="${resp[i].githubUrl}" class="work image-popup" 
+								style="background-image: url(${resp[i].pictureUrl});">
+								<div class="desc">
+									<h2>${resp[i].title}</h2>
+								</div>
+							</a>
+						</div>`
+				}
+
+				document.querySelector('.row').innerHTML = str
+			})
+
+			//function toDataUrl(url){
+			// var img = new Image();
+			// img.src = url;
+			// img.onload = function(){
+			// 	var canvas = document.createElement("canvas");
+			// 	canvas.width = this.width;
+			// 	canvas.height = this.height;
+			// 	var ctx = canvas.getContext("2d");
+			// 	ctx.drawImage(this, 0, 0);
+			// 	var dataURL = canvas.toDataURL("image/png");
+			// 	alert(dataURL.replace(/^data:image\/(png|jpg);base64,/, ""));
+			// }
+		
+
+	</script>
 
 	</body>
 </html>

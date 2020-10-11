@@ -61,6 +61,36 @@
 	<script src="js/respond.min.js"></script>
 	<![endif]-->
 
+	<style>
+		.badge-primary{
+			border-radius: 10px;
+			display: inline-block;
+			padding: .25em .4em;
+			font-size: 75%;
+			font-weight: 700;
+			line-height: 1;
+			text-align: center;
+			white-space: nowrap;
+			vertical-align: baseline;
+			color: white;
+			background-color: #007bff;
+		}
+
+		.badge-info{
+			border-radius: 10px;
+			display: inline-block;
+			padding: .25em .4em;
+			font-size: 75%;
+			font-weight: 700;
+			line-height: 1;
+			text-align: center;
+			white-space: nowrap;
+			vertical-align: baseline;
+			color: #fff;
+			background-color: #ffc107;
+		}
+	</style>
+
 	</head>
 	<body>
 	<div id="fh5co-page">
@@ -82,9 +112,9 @@
 			<div class="fh5co-narrow-content">
 				<h2 class="fh5co-heading animate-box" data-animate-effect="fadeInLeft">Read Our Blog</h2>
 				<div class="row row-bottom-padded-md">
-					<div class="col-md-3 col-sm-6 col-padding animate-box" data-animate-effect="fadeInLeft">
+					<!-- <div class="col-md-3 col-sm-6 col-padding animate-box" data-animate-effect="fadeInLeft">
 						<div class="blog-entry">
-							<a href="#" class="blog-img"><img src="images/img-1.jpg" class="img-responsive" alt="Free HTML5 Bootstrap Template by FreeHTML5.co"></a>
+							<a href="#" class="blog-img"><img src="images/beer.jpg" class="img-responsive" alt="Free HTML5 Bootstrap Template by FreeHTML5.co"></a>
 							<div class="desc">
 								<h3><a href="#">Inspirational Website</a></h3>
 								<span><small>by Admin </small> / <small> Web Design </small> / <small> <i class="icon-comment"></i> 14</small></span>
@@ -215,7 +245,7 @@
 								<a href="#" class="lead">Read More <i class="icon-arrow-right3"></i></a>
 							</div>
 						</div>
-					</div>
+					</div> -->
 				</div>
 			</div>
 		
@@ -252,6 +282,39 @@
 	
 	<!-- MAIN JS -->
 	<script src="js/main.js"></script>
+
+	<script>
+		fetch("https://resumelist.azurewebsites.net/crud")
+			.then(res => res.json())
+			.then(resp => {
+				console.log(resp)
+				let str = ""
+				let strList = JSON.parse(resp[0].description)
+				// console.log(strList)
+				for(let i = 0; i < resp.length; i++ ){
+					str += `<div class="col-md-3 col-sm-6 col-padding" data-animate-effect="fadeInLeft">
+							<div class="blog-entry">
+								<a href="${resp[i].url}" class="blog-img">
+									<img src="${resp[i].pictureUrl}" class="img-responsive" alt="Free HTML5 Bootstrap Template by FreeHTML5.co"></a>
+								<div class="desc">
+									<h3>
+										${resp[i].title}
+										<span class="${resp[i].tag == "fronted" ? 'badge-primary': 'badge-info'}" 
+											style="width:40%; display:inline;">${resp[i].tag}</span>
+									</h3>
+									<ul>
+										<li>${JSON.parse(resp[i].description)[0]}</li>
+										<li>${JSON.parse(resp[i].description)[1]}</li>
+										<li>${JSON.parse(resp[i].description)[2]}</li>
+									</ul>
+									<a href="${resp[i].githubUrl}" class="lead">Read More <i class="icon-arrow-right3"></i></a>
+								</div>
+							</div>
+						</div>`
+				}
+				document.querySelector('.row').innerHTML = str
+			})
+	</script>
 
 	</body>
 </html>
