@@ -54,7 +54,7 @@
 	<!-- Theme style  -->
 	<link rel="stylesheet" href="css/style.css">
 	<!-- <link rel="stylesheet" href="sass/style.css"> -->
-
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css">
 	<!-- Modernizr JS -->
 	<script src="js/modernizr-2.6.2.min.js"></script>
 	<!-- FOR IE9 below -->
@@ -63,6 +63,24 @@
 	<![endif]-->
 
 	<style>
+		.img__wrapper { 
+			width: 30vmin; 
+			height: 30vmin; 
+			border-radius: 50%; 
+			overflow: hidden; 
+			display:table-cell;
+			vertical-align:middle;
+			text-align:center;
+		} 
+		
+		img { 
+			 max-width: 100%; 
+			 height: auto; 
+			 object-fit: cover; 
+			 object-position: center; 
+			 /* border-radius: 50%;  */
+		}
+
 		.badge-primary{
 			border-radius: 10px;
 			display: inline-block;
@@ -126,20 +144,22 @@
 	<div id="fh5co-page">
 		<a href="#" class="js-fh5co-nav-toggle fh5co-nav-toggle"><i></i></a>
 		<aside id="fh5co-aside" role="complementary" class="border js-fullheight">
-			<h1 id="fh5co-logo"><a href="about.html">Norris</a></h1>
+			<h1 id="fh5co-logo">
+				<div class="img__wrapper" style="margin-bottom: 40px;"> 
+					<img src="images/zebra.jpg" alt=""> 
+				</div>
+				<div class="mt-3"><a href="index.html">Norris</a></div>
+			</h1>
 			<nav id="fh5co-main-menu" role="navigation">
 				<ul>
-					<li><a href="portfolio.html">Portfolio</a></li>
-					<li class="fh5co-active"><a href="blog.html">Blog</a></li>
-					<li><a href="about.html">About</a></li>
-					<li><a href="contact.html">Contact</a></li>
+					<li class="fh5co-active"><a href="index.html">Portfolio</a></li>
 				</ul>
 			</nav>
 		</aside>
 
 		<div id="fh5co-main">
 			<div class="fh5co-narrow-content">
-				<h2 class="fh5co-heading animate-box" data-animate-effect="fadeInLeft">Profolio</h2>
+				<h2 class="fh5co-heading animate-box" data-animate-effect="fadeInLeft">Portfolio</h2>
 				<div class="btn-group filters-button-group mr-2" role="group">
 					<button type="button" class="btn btn-secondary is-checked" data-filter="*">All</button>
 					<button type="button" class="btn btn-secondary" data-filter="fronted">Fronted</button>
@@ -209,7 +229,7 @@
 		function render(newList){
 			let str = ""
 			for(let i = 0; i < newList.length; i++ ){
-					str += `<div class="mix col-md-4 col-sm-6 col-padding ${newList[i].tag}">
+					str += `<div class="mix col-md-4 col-sm-6 col-padding ${newList[i].tag} animated bounceInDown">
 							<div class="blog-entry">
 								<a href="${newList[i].url}" 
 									class="blog-img" target="_blank">
@@ -228,7 +248,7 @@
 										<li>${JSON.parse(newList[i].description)[1]}</li>
 										<li>${JSON.parse(newList[i].description)[2]}</li>
 									</ul>
-									<a href="${newList[i].githubUrl}" class="lead">Read More</a>
+									<a href="${newList[i].githubUrl}" class="lead">Read More <i class="fab fa-github"></i></a>
 								</div>
 							</div>
 						</div>`
