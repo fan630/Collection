@@ -173,6 +173,7 @@
 			.then(res => res.json())
 			.then(resp => {
 				list = resp
+				render(list)
 			})
 
 		// change is-checked class on buttons
@@ -194,10 +195,10 @@
 		$('.filters-button-group').on( 'click', 'button', function() {
 			var filterValue = $(this).attr('data-filter');
 			let newList = list.filter((item, index) => {
-				if(filterValue == item.tag){
-					return item
-				}else if(filterValue == '*'){
+				if(filterValue == '*'){
 					return list
+				}else if(filterValue == item.tag){
+					return item
 				}
 			})
 			render(newList)
