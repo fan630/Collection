@@ -589,7 +589,10 @@ body {
 			font-size: 11px;
 			text-transform: uppercase;
 			letter-spacing: 2px;
-			color: $brand-black;
+			color: black;
+			&:hover{
+				color: orange;
+			}
 		}
 	}
 	&:hover{
