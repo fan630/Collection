@@ -112,10 +112,6 @@
 			width: 120px;
 			height: 120px;
 			animation: spin 2s linear infinite;
-			text-align: center;
-			top:50%; 
-			left:50%; 
-			transform: translate(-50%, -50%);
 		}
 
 		@keyframes spin {
@@ -123,12 +119,6 @@
 			100% { transform: rotate(360deg); }
 		}
 
-		.grid{
-			/* display: flex;
-			justify-content: center;
-			align-items: center;
-			height: 100vh !important; */
-		}
 	</style>
 
 	</head>
@@ -152,11 +142,11 @@
 				<h2 class="fh5co-heading animate-box" data-animate-effect="fadeInLeft">Profolio</h2>
 				<div class="btn-group filters-button-group mr-2" role="group">
 					<button type="button" class="btn btn-secondary is-checked" data-filter="*">All</button>
-					<button type="button" class="btn btn-secondary" data-filter=".fronted">Fronted</button>
-					<button type="button" class="btn btn-secondary" data-filter=".backend">Backend</button>
+					<button type="button" class="btn btn-secondary" data-filter="fronted">Fronted</button>
+					<button type="button" class="btn btn-secondary" data-filter="backend">Backend</button>
 				</div>
 				<div class="row row-bottom-padded-md grid">
-					
+					<div class="loader text-center"></div>
 				</div>
 			</div>
 		</div>
@@ -172,43 +162,18 @@
 	<script src="js/jquery.waypoints.min.js"></script>
 	<!-- Flexslider -->
 	<script src="js/jquery.flexslider-min.js"></script>
-	<script src="https://unpkg.com/isotope-layout@3/dist/isotope.pkgd.min.js"></script>
 	<!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/mixitup/3.3.1/mixitup.min.js"></script> -->
 	
 	<!-- MAIN JS -->
 	<script src="js/main.js"></script>
 
 	<script>
-		// bind filter button click
-		// external js: isotope.pkgd.js
-
-		//init Isotope
-		var $grid = $('.grid').isotope({
-			itemSelector: '.element-item'
-		});
-		console.log('grid', $grid)
-		// filter functions
-		// var filterFns = {
-		// // show if number is greater than 50
-		// numberGreaterThan50: function() {
-		// 	var number = $(this).find('.number').text();
-		// 	return parseInt( number, 10 ) > 50;
-		// },
-		// // show if name ends with -ium
-		// ium: function() {
-		// 	var name = $(this).find('.name').text();
-		// 	return name.match( /ium$/ );
-		//    }
-		// };
-		//bind filter button click
-
-		$('.filters-button-group').on( 'click', 'button', function() {
-			var filterValue = $( this ).attr('data-filter');
-			// use filterFn if matches value
-			//filterValue = filterFns[ filterValue ] || filterValue;
-			console.log(filterValue)
-			$grid.isotope({ filter: filterValue });
-		});
+		
+		fetch("https://resumelist.azurewebsites.net/crud")
+			.then(res => res.json())
+			.then(resp => {
+				list = resp
+			})
 
 		// change is-checked class on buttons
 		var btns = document.querySelectorAll("button[type='button']")
@@ -219,63 +184,58 @@
 				btnAry.filter(target => {
 					if(target.classList.contains('is-checked')){
 						target.classList.remove('is-checked')
+						
 					}
 				})
 				this.classList.add('is-checked')
 			})
 		})
-
-		var allPicture = document.querySelectorAll('.picture')
-
-		let done = false
-		allPicture.forEach((item, index) => {
-			item.onload = function(){
-				done = true
-			}
-		})
-
-		var str2 = `<div class="loader"></div>`
-
-		if(done){
-			document.querySelector('.row').innerHTML = ""
-		}else{
-			document.querySelector('.row').innerHTML = str2
-		}
 		
+		$('.filters-button-group').on( 'click', 'button', function() {
+			var filterValue = $(this).attr('data-filter');
+			let newList = list.filter((item, index) => {
+				if(filterValue == item.tag){
+					return item
+				}else if(filterValue == '*'){
+					return list
+				}
+			})
+			render(newList)
+		});
 
-		fetch("https://resumelist.azurewebsites.net/crud")
-			.then(res => res.json())
-			.then(resp => {
-				let str = ""
-				let strList = JSON.parse(resp[0].description)
-				// console.log(strList)
-				for(let i = 0; i < resp.length; i++ ){
-					str += `<div class="mix col-md-4 col-sm-6 col-padding ${resp[i].tag}">
+		let list = []
+
+		function render(newList){
+			let str = ""
+			for(let i = 0; i < newList.length; i++ ){
+					str += `<div class="mix col-md-4 col-sm-6 col-padding ${newList[i].tag}">
 							<div class="blog-entry">
-								<a href="${resp[i].url}" 
+								<a href="${newList[i].url}" 
 									class="blog-img" target="_blank">
-									<img src="${resp[i].pictureUrl}" id="picture" 
+									<img src="${newList[i].pictureUrl}" id="picture" 
 										class="img-responsive img-thumbnail" 
-										role="status" alt="#">
+										alt="#">
 								</a>
 								<div class="desc">
 									<h3>
-										${resp[i].title}
-										<span class="${resp[i].tag == "fronted" ? 'badge-primary': 'badge-info'}" 
-											style="width:40%; display:inline;">${resp[i].tag}</span>
+										${newList[i].title}
+										<span class="${newList[i].tag == "fronted" ? 'badge-primary': 'badge-info'}" 
+											style="width:40%; display:inline;">${newList[i].tag}</span>
 									</h3>
 									<ul>
-										<li>${JSON.parse(resp[i].description)[0]}</li>
-										<li>${JSON.parse(resp[i].description)[1]}</li>
-										<li>${JSON.parse(resp[i].description)[2]}</li>
+										<li>${JSON.parse(newList[i].description)[0]}</li>
+										<li>${JSON.parse(newList[i].description)[1]}</li>
+										<li>${JSON.parse(newList[i].description)[2]}</li>
 									</ul>
-									<a href="${resp[i].githubUrl}" class="lead">Read More</a>
+									<a href="${newList[i].githubUrl}" class="lead">Read More</a>
 								</div>
 							</div>
 						</div>`
 				}
-				document.querySelector('.row').innerHTML = str
-			})
+			document.querySelector('.row').innerHTML = str
+		}
+
+
 	</script>
 	</body>
 </html>
