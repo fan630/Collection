@@ -161,11 +161,11 @@
 		<div id="fh5co-main">
 			<div class="fh5co-narrow-content">
 				<h2 class="fh5co-heading animate-box" data-animate-effect="fadeInLeft">Portfolio</h2>
-				<div class="btn-group filters-button-group mr-2" role="group">
+				<!-- <div class="btn-group filters-button-group mr-2" role="group">
 					<button type="button" class="btn btn-secondary is-checked" data-filter="*">All</button>
 					<button type="button" class="btn btn-secondary" data-filter="fronted">Fronted</button>
 					<button type="button" class="btn btn-secondary" data-filter="backend">Backend</button>
-				</div>
+				</div> -->
 				<div class="row row-bottom-padded-md grid">
 					<div class="loader"></div>
 				</div>
@@ -198,39 +198,39 @@
 			})
 
 		// change is-checked class on buttons
-		var btns = document.querySelectorAll("button[type='button']")
-		btns.forEach((item, index) => {
-			var clicked = false
-			item.addEventListener('click', function(){
-				var btnAry = Array.from(btns)
-				btnAry.filter(target => {
-					if(target.classList.contains('is-checked')){
-						target.classList.remove('is-checked')
+		// var btns = document.querySelectorAll("button[type='button']")
+		// btns.forEach((item, index) => {
+		// 	var clicked = false
+		// 	item.addEventListener('click', function(){
+		// 		var btnAry = Array.from(btns)
+		// 		btnAry.filter(target => {
+		// 			if(target.classList.contains('is-checked')){
+		// 				target.classList.remove('is-checked')
 						
-					}
-				})
-				this.classList.add('is-checked')
-			})
-		})
+		// 			}
+		// 		})
+		// 		this.classList.add('is-checked')
+		// 	})
+		// })
 		
-		$('.filters-button-group').on( 'click', 'button', function() {
-			var filterValue = $(this).attr('data-filter');
-			let newList = list.filter((item, index) => {
-				if(filterValue == '*'){
-					return list
-				}else if(filterValue == item.tag){
-					return item
-				}
-			})
-			render(newList)
-		});
+		// $('.filters-button-group').on( 'click', 'button', function() {
+		// 	var filterValue = $(this).attr('data-filter');
+		// 	let newList = list.filter((item, index) => {
+		// 		if(filterValue == '*'){
+		// 			return list
+		// 		}else if(filterValue == item.tag){
+		// 			return item
+		// 		}
+		// 	})
+		// 	render(newList)
+		// });
 
 		let list = []
 
 		function render(newList){
 			let str = ""
 			for(let i = 0; i < newList.length; i++ ){
-					str += `<div class="mix col-md-4 col-sm-6 col-padding ${newList[i].tag} animated bounceInDown">
+					str += `<div class="mix col-md-4 col-sm-6 col-padding animated bounceInDown">
 							<div class="blog-entry">
 								<a href="${newList[i].url}" 
 									class="blog-img" target="_blank">
@@ -241,8 +241,6 @@
 								<div class="desc">
 									<h3>
 										${newList[i].title}
-										<span class="${newList[i].tag == "fronted" ? 'badge-primary': 'badge-info'}" 
-											style="width:40%; display:inline;">${newList[i].tag}</span>
 									</h3>
 									<ul>
 										<li>${JSON.parse(newList[i].description)[0]}</li>
